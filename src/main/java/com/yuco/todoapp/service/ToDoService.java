@@ -16,4 +16,10 @@ public class ToDoService {
         var newToDo = dto.toEntity();
         return toDoRepository.save(newToDo);
     }
+
+    // 할일 단건 조회
+    public ToDo getToDo(Long todoId){
+        return toDoRepository.findById(todoId)
+                .orElseThrow(IllegalArgumentException::new);
+    }
 }

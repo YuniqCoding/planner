@@ -3,11 +3,13 @@ package com.yuco.todoapp.repository;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Getter
 @Entity
+@NoArgsConstructor
 public class ToDo {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
