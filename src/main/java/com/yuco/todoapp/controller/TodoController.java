@@ -6,13 +6,17 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 // @RestController =  @Controller에 @ResponseBody가 추가된 것
+@RequestMapping("/v1.0/todo")
 @RestController
 @AllArgsConstructor
 public class TodoController {
 
     public final ToDoService toDoService;
-    @PostMapping("/v1.0/todo")
+    @PostMapping
     public ResponseEntity<ToDoResponseDto> postTodo(@RequestBody ToDoRequestDto dto){
         //TODO 일정 작성 기능
         ToDo todo = toDoService.createToDo(dto);
@@ -20,10 +24,18 @@ public class TodoController {
         return ResponseEntity.ok().body(response);
     }
 
-    @GetMapping("/v1.0/todo/{todoId}")
+    @GetMapping("/{todoId}")
     public ResponseEntity<ToDoResponseDto> getTodo(@PathVariable Long todoId){
         ToDo todo = toDoService.getToDo(todoId);
         ToDoResponseDto response = new ToDoResponseDto(todo);
+        return ResponseEntity.ok().body(response);
+    }
+    @GetMapping
+    public ResponseEntity<List<ToDoResponseDto>> getTodos(){
+        List<ToDo> todo = toDoService.getToDos();
+        List<ToDoResponseDto> response = todo.stream()
+                .map(ToDoResponseDto::new)
+                .collect(Collectors.toList());
         return ResponseEntity.ok().body(response);
     }
 }
