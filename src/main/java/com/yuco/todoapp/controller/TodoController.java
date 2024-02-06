@@ -38,4 +38,11 @@ public class TodoController {
                 .collect(Collectors.toList());
         return ResponseEntity.ok().body(response);
     }
+
+    @PutMapping("/{todoId}")
+    public ResponseEntity<ToDoResponseDto> putTodo(@PathVariable Long todoId,@RequestBody ToDoRequestDto dto){
+        ToDo todo = toDoService.updateToDo(todoId,dto);
+        ToDoResponseDto response = new ToDoResponseDto(todo);
+        return ResponseEntity.ok().body(response);
+    }
 }
